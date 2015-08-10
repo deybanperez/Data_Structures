@@ -1,0 +1,107 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
+
+struct treeNode
+{
+	struct treeNode *leftPtr;
+	int data;
+	struct treeNode *rigthPtr;
+
+};
+
+typedef struct treeNode TREENODE;
+typedef TREENODE *TREENODEPTR;
+
+void insertNode(TREENODEPTR *,int);
+void inOrder(TREENODEPTR);
+void preOrder(TREENODEPTR);
+void postOrder(TREENODEPTR);
+
+main()
+{
+	int i, item,n;
+	TREENODEPTR rootPtr=NULL;
+
+	printf("Introduzca el numero de nodos que quiere agregar: ");
+	scanf("%d",&n);
+
+	for(i=0;i<n;i++)
+	{
+		scanf("%d",&item);
+		insertNode(&rootPtr,item);
+
+	}
+	
+	/*for(i=1;i<=10;i++)
+	{
+		scanf("%d",&item);
+		printf("%3d",item);
+		insertNode(&rootPtr,item);
+	}*/
+	
+	printf("\n\nThe preOrder traversal is:\n");
+	preOrder(rootPtr->rigthPtr);
+	
+	printf("\n\nThe inOrder traversal is:\n");
+	inOrder(rootPtr->rigthPtr);
+	
+	printf("\n\nThe postOrder traversal is:\n");
+	postOrder(rootPtr->rigthPtr);
+	
+	return 0;
+}
+
+void insertNode(TREENODEPTR *treePtr, int value)
+{
+	if(*treePtr == NULL)
+	{
+		*treePtr = malloc(sizeof(TREENODE));
+		
+		if(*treePtr !=NULL)
+		{
+			(*treePtr)->data = value;
+			(*treePtr)->leftPtr = NULL;
+			(*treePtr)->rigthPtr = NULL;
+		}else
+			printf("%d not inserted. No memory available.\n",value);
+	
+	}else
+		if(value < (*treePtr)->data)
+			insertNode(&((*treePtr)->leftPtr),value);
+		else
+			if(value > (*treePtr)->data)
+				insertNode(&((*treePtr)->rigthPtr),value);
+			else
+				printf("dup");				
+}
+
+void inOrder(TREENODEPTR treePtr)
+{
+	if(treePtr != NULL)
+	{
+		inOrder(treePtr->leftPtr);
+		printf("%3d",treePtr->data);
+		inOrder(treePtr->rigthPtr);
+	}
+}
+
+void preOrder(TREENODEPTR treePtr)
+{
+	if(treePtr != NULL)
+	{
+		printf("%3d",treePtr->data);
+		inOrder(treePtr->leftPtr);
+		inOrder(treePtr->rigthPtr);
+	}
+}
+
+void postOrder(TREENODEPTR treePtr)
+{
+	if(treePtr != NULL)
+	{
+		inOrder(treePtr->leftPtr);
+		inOrder(treePtr->rigthPtr);
+		printf("%3d\n",treePtr->data);
+	}
+}

@@ -1,0 +1,141 @@
+#include <iostream>
+#include <stdlib.h>
+
+using namespace std;
+
+template <typename Type>
+
+class Tree
+{
+	private:
+
+		class TreeNode
+		{
+			public:
+				
+				Type Value;
+				TreeNode *leftPtr;
+				TreeNode *rigthPtr;
+
+				TreeNode()
+				{
+					leftPtr=NULL;
+					rigthPtr=NULL;
+				}
+
+				TreeNode(Type elem)
+				{
+					Value=elem;
+					leftPtr=NULL;
+					rigthPtr=NULL;
+				}
+		};
+
+
+		//NodoArbol *NodoArbolPtr;
+		TreeNode *RootPtr;
+
+	public:
+
+		Tree();
+		void insertNode(int value);
+		void inOrder();
+		void preOrder();
+		void postOrder();
+
+};
+
+template <typename Type>
+
+Tree<Type>::Tree()
+{
+	RootPtr=NULL;	
+}
+
+template <typename Type>
+
+void Tree<Type>:: insertNode(int value)
+{
+	if(RootPtr == NULL)
+	{
+		
+		if(RootPtr !=NULL)
+		{
+			RootPtr = new TreeNode(value);
+		}else
+			cout<<"not inserted. No memory available."<<endl<<value;
+	
+	}else
+		if(value < RootPtr->Value)
+			RootPtr->leftPtr->insertNode(value);
+		else
+			if(value > RootPtr->data)
+				RootPtr->rigthPtr->insertNode(value);
+			else
+				cout<<"dup";
+
+}
+
+template <typename Type>
+
+void Tree<Type>::inOrder()
+{
+	if(RootPtr != NULL)
+	{
+		RootPtr->leftPtr->inOrder();
+		cout<<"	"<<RootPtr->Value;
+		RootPtr->rigthPtr->inOrder();
+	}
+}
+
+template <typename Type>
+
+void Tree<Type>::preOrder()
+{
+	if(treePtr != NULL)
+	{
+		cout<<"	"<<RootPtr->Value;
+		RootPtr->leftPtr->inOrder();
+		RootPtr->rigthPtrinOrder();
+	}
+}
+
+template <typename Type>
+
+void Tree<Type>::postOrder()
+{
+	if(treePtr != NULL)
+	{
+		RootPtr->leftPtrinOrder();
+		RootPtr->rigthPtrinOrder();
+		cout<<"	"<<RootPtr->Value;
+	}
+}
+
+int main()
+{
+
+	int i, item,n;
+	Tree <int> *rootPtr=NULL;
+
+	cout<<"Introduzca el numero de nodos que quiere agregar: ";
+	cin>>n;
+
+	for(i=0;i<n;i++)
+	{
+		cin>>item;
+		rootPtr->insertNode(item);
+
+	}
+	
+	cout<<"\n\nThe preOrder traversal is:\n";
+	rootPtr->preOrder();
+	
+	cout<<"\n\nThe inOrder traversal is:\n";
+	rootPtr->inOrder();
+	
+	cout<<"\n\nThe postOrder traversal is:\n";
+	rootPtr->postOrder();
+
+	return 0;
+}
